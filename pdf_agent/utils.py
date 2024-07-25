@@ -4,6 +4,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
+import streamlit as st
 import time  # 导入 time 模块
 
 def qa_agent(openai_api_key, memory, upload_file, question):
@@ -39,7 +40,10 @@ def qa_agent(openai_api_key, memory, upload_file, question):
                 print(f"Error: {e}, retrying...")
                 time.sleep(2)  # 等待2秒后重试
     
-    db = FAISS.from_documents(texts, all_embeddings)
+    # 创建FAISS向量存储
+    db = FAISS(embedding_model=embeddings_model)
+    db.add_documents(texts, all_embeddings)
+    
     retriever = db.as_retriever()
     
     qa = ConversationalRetrievalChain.from_llm(

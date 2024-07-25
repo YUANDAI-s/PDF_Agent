@@ -7,7 +7,6 @@ st.title("pdf阅读助手")
 with st.sidebar:
     openai_api_key = st.text_input("请输入你的openai密钥",type="password")
     st.markdown("[获取openai密钥](https://baidu.com)")
-    openai_api_key = "sk-28YdMVkIZR7s8w5892BbD37f87904bBa95D8F568F61038Ff"
 
 if "memory" not in st.session_state:
     st.session_state["memory"] = ConversationBufferMemory(

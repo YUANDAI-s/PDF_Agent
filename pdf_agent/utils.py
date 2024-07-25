@@ -15,8 +15,8 @@ def qa_agent(openai_api_key, memory, upload_file, question):
     loader = PyPDFLoader(temp_file_path)
     docs = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=50,
+        chunk_size=2000,
+        chunk_overlap=100,
         separators=["\n","。","！","？","，","、",""]
     )
     texts = text_splitter.split_documents(docs)

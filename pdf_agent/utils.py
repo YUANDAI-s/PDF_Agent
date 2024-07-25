@@ -41,8 +41,7 @@ def qa_agent(openai_api_key, memory, upload_file, question):
                 time.sleep(2)  # 等待2秒后重试
     
     # 创建FAISS向量存储
-    db = FAISS(embedding_model=embeddings_model)
-    db.add_documents(texts, all_embeddings)
+    db = FAISS.from_documents(texts, embeddings_model)  # 使用 from_documents 方法
     
     retriever = db.as_retriever()
     

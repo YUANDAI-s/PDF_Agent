@@ -26,22 +26,8 @@ def qa_agent(openai_api_key, memory, upload_file, question):
     
     embeddings_model = OpenAIEmbeddings(openai_api_key=openai_api_key, openai_api_base="https://api.aigc369.com/v1")
     
-    # 批量处理
-    all_embeddings = []
-    batch_size = 10  # 每次处理10个文本块
-    for i in range(0, len(texts), batch_size):
-        batch_texts = texts[i:i + batch_size]
-        for _ in range(3):  # 最多重试3次
-            try:
-                batch_embeddings = embeddings_model.embed_documents(batch_texts)
-                all_embeddings.extend(batch_embeddings)
-                break
-            except Exception as e:
-                print(f"Error: {e}, retrying...")
-                time.sleep(2)  # 等待2秒后重试
-    
-    # 创建FAISS向量存储
-    db = FAISS.from_documents(texts, embeddings_model)  # 使用 from_documents 方法
+    # 直接使用 from_documents 方法创建FAISS索引
+    db = FAISS.from_documents(texts, embeddings_model)
     
     retriever = db.as_retriever()
     

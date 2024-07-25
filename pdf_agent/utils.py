@@ -7,7 +7,10 @@ from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
 
 def qa_agent(openai_api_key, memory, upload_file, question):
-    model = ChatOpenAI(model = "gpt-3.5-turbo",openai_api_key = openai_api_key,openai_api_base = "https://api.aigc369.com/v1")
+    model = ChatOpenAI(model = "gpt-3.5-turbo",
+                       openai_api_key = openai_api_key,
+                       openai_api_base = "https://api.aigc369.com/v1",
+                       temperature=2)
     file_content = upload_file.read()
     temp_file_path = "temp.pdf"
     with open(temp_file_path,"wb") as temp_file:
